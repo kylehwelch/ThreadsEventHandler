@@ -12,6 +12,14 @@ public class EventTracker implements Tracker {
     }
 
     synchronized public static EventTracker getInstance() {
+        if (INSTANCE == null) {
+            INSTANCE = new EventTracker();
+        }
+        return INSTANCE;
+    }
+
+    @Override
+    public Map<String, Integer> tracker() {
         return null;
     }
 
@@ -19,7 +27,7 @@ public class EventTracker implements Tracker {
     }
 
     synchronized public Boolean has(String message) {
-        return null;
+        return tracker.containsKey(message);
     }
 
     synchronized public void handle(String message, EventHandler e) {
