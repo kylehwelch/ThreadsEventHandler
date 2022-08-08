@@ -32,7 +32,7 @@ public class EventTrackerTest {
 
         eventTracker.push("test");
 
-        Assert.assertEquals(testList, eventTracker.tracker());
+        Assert.assertEquals(testList, eventTracker.getTracker());
 
     }
 
@@ -69,7 +69,7 @@ public class EventTrackerTest {
 
         boolean trackerHasTest = eventTracker.has("test");
 
-        Assert.assertFalse(trackerHasTest);
+        Assert.assertTrue(trackerHasTest);
     }
 
     @Test

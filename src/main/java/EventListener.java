@@ -1,6 +1,11 @@
 //import jdk.internal.event.Event;
 
-public class EventListener extends Thread {
+import org.w3c.dom.events.Event;
+
+import java.sql.SQLOutput;
+import java.util.Map;
+
+public class EventListener extends Thread implements EventHandler {
 
     private String messageToListenFor;
     private String messageToReplyWith;
@@ -19,18 +24,27 @@ public class EventListener extends Thread {
     }
 
     public void run() {
+        while (!readyToQuit()) {
+            if (shouldReply()) {
+                reply();
+            }
+        }
     }
 
     public Boolean readyToQuit() {
-        EventTracker.getInstance();
         return eventTracker.has("quit");
     }
 
     public Boolean shouldReply() {
-        EventTracker.getInstance();
         return eventTracker.has(messageToListenFor);
     }
 
     public void reply() {
+        eventTracker.handle(messageToListenFor, this);
+    }
+
+    @Override
+    public void handle() {
+        System.out.println(messageToReplyWith);
     }
 }
